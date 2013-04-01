@@ -21,4 +21,14 @@ public class LocationTest {
 		
 		assertEquals(normalized, wrapped);
 	}
+	
+	@Test
+	public void testAfterDelta() {
+		Location start = new Location(0, 0);
+		Location end = start.after(-3, -2);
+		
+		Location expected = new Location(Location.MAX_ROWS - 3, Location.MAX_COLUMNS - 2);
+		
+		assertEquals(expected, end);
+	}
 }
