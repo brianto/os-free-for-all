@@ -12,7 +12,7 @@ public class Location {
 			row += MAX_ROWS;
 		
 		while (column < 0)
-			row += MAX_COLUMNS;
+			column += MAX_COLUMNS;
 		
 		this.row = row % MAX_ROWS;
 		this.column = column % MAX_COLUMNS;
