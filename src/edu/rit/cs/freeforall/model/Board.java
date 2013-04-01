@@ -12,11 +12,17 @@ public class Board extends Observable {
 	private Map<Team, AtomicInteger> scores;
 
 	public Board() {
-		this.spaces = new ConcurrentHashMap<Piece, Location>();
-		this.scores = new HashMap<Team, AtomicInteger>(Team.values().length);
+		this(new ConcurrentHashMap<Piece, Location>(),
+				new HashMap<Team, AtomicInteger>(Team.values().length));
 
 		for (Team team : Team.values())
 			this.scores.put(team, new AtomicInteger(0));
+	}
+
+	public Board(ConcurrentHashMap<Piece, Location> spaces,
+			HashMap<Team, AtomicInteger> scores) {
+		this.spaces = spaces;
+		this.scores = scores;
 	}
 
 	public void advancePieces() {
@@ -62,12 +68,12 @@ public class Board extends Observable {
 		return evictedPiece;
 	}
 
-	public boolean maybeEvictPiece(Location target) {
+	private boolean maybeEvictPiece(Location target) {
 		Piece suspect = null;
 
 		if (!this.spaces.values().contains(target))
 			return false;
-
+		
 		for (Map.Entry<Piece, Location> entry : this.spaces.entrySet()) {
 			Piece candidate = entry.getKey();
 			Location location = entry.getValue();
@@ -79,7 +85,7 @@ public class Board extends Observable {
 		}
 
 		suspect.finish();
-		this.spaces.remove(target);
+		this.spaces.remove(suspect);
 
 		return true;
 	}
