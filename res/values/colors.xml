@@ -1,5 +1,9 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
+    <color name="team_red">#C00</color>
+    <color name="team_blue">#66F</color>
+    <color name="team_green">#0C0</color>
+    <color name="team_yellow">#CC0</color>
 
 </resources>
