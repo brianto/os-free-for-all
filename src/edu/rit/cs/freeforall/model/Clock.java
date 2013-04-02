@@ -17,6 +17,7 @@ public class Clock {
 
 	public Clock() {
 		this.timer = new Timer();
+		this.active = true;
 		
 		this.advanceTime = 0;
 		this.spawnTime = 0;
@@ -29,12 +30,12 @@ public class Clock {
 		}, 0, TIME_UNIT_DURATION);
 	}
 
-	public Clock withBoard(Board board) {
+	public Clock useBoard(Board board) {
 		this.board = board;
 		return this;
 	}
 	
-	private void onTick() {
+	protected void onTick() {
 		if (!this.active)
 			return;
 

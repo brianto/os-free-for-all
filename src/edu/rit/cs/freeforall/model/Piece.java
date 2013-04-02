@@ -89,6 +89,10 @@ public class Piece extends Thread {
 		this.running = false;
 	}
 
+	public boolean isRunning() {
+		return this.running;
+	}
+
 	public Team getTeam() {
 		return this.team;
 	}

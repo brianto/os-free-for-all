@@ -1,8 +1,12 @@
 package edu.rit.cs.freeforall.model;
 
+import java.util.Random;
+
 public class Location {
 	public static final int MAX_ROWS = 6; // TODO move into preferences
 	public static final int MAX_COLUMNS = 6; // TODO move into preferences
+	
+	private static final Random random = new Random();
 	
 	private final int row;
 	private final int column;
@@ -38,5 +42,9 @@ public class Location {
 
 	public Location after(int deltaRow, int deltaColumn) {
 		return new Location(this.row + deltaRow, this.column + deltaColumn);
+	}
+
+	public static Location random() {
+		return new Location(random.nextInt(MAX_ROWS), random.nextInt(MAX_COLUMNS));
 	}
 }

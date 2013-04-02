@@ -40,6 +40,15 @@ public class Board extends Observable {
 	}
 
 	public void spawnPieces() {
+		for (Team team : Team.values()) {
+			Piece piece = new Piece(team);
+			Location location = Location.random();
+
+			this.spawnPiece(piece, location);
+
+			piece.start();
+		}
+
 		this.notifyObservers();
 	}
 
@@ -50,9 +59,30 @@ public class Board extends Observable {
 		this.setChanged();
 	}
 
+	/**
+	 * Tries to move a piece.
+	 * 
+	 * This method evicts other pieces if necessary and adjusts the score to
+	 * reflect eviction.
+	 * 
+	 * If a piece has already been evicted by a another piece, the piece will
+	 * not move.
+	 * 
+	 * @param piece
+	 *            target piece to move
+	 * @param deltaRow
+	 *            row(s) up/down to move (negative is up)
+	 * @param deltaColumn
+	 *            row(s) left/right to move (negative is left)
+	 *            
+	 * @return <code>true</code> if a piece was evicted.
+	 */
 	public synchronized boolean movePiece(Piece piece, int deltaRow,
 			int deltaColumn) {
 		assert this.spaces.containsKey(piece);
+
+		if (!piece.isRunning())
+			return false;
 
 		Location location = this.spaces.get(piece);
 		Location destination = location.after(deltaRow, deltaColumn);
@@ -73,7 +103,7 @@ public class Board extends Observable {
 
 		if (!this.spaces.values().contains(target))
 			return false;
-		
+
 		for (Map.Entry<Piece, Location> entry : this.spaces.entrySet()) {
 			Piece candidate = entry.getKey();
 			Location location = entry.getValue();
