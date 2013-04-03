@@ -1,3 +1,9 @@
+/*
+ * File: Board.java
+ * Description: This class models our Board for the Android Free for All
+ * game.
+ * Contributor(s): Brian To, Ryan Belair
+ */
 package edu.rit.cs.freeforall.model;
 
 import java.util.HashMap;
@@ -7,16 +13,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Board extends Observable {
+public class Board extends Observable 
+{
 	private ConcurrentHashMap<Piece, Location> spaces;
 	private Map<Team, AtomicInteger> scores;
 
-	public Board() {
-		this(new ConcurrentHashMap<Piece, Location>(),
-				new HashMap<Team, AtomicInteger>(Team.values().length));
+	/**
+	 * Creates a new Board instance
+	 */
+	public Board( ) 
+	{
+		this( new ConcurrentHashMap<Piece, Location>( ),
+				new HashMap<Team, AtomicInteger>( Team.values().length ) );
 
-		for (Team team : Team.values())
-			this.scores.put(team, new AtomicInteger(0));
+		for ( Team team : Team.values( ) )
+			this.scores.put(team, new AtomicInteger( 0 ) );
 	}
 
 	public Board(ConcurrentHashMap<Piece, Location> spaces,
@@ -55,7 +66,6 @@ public class Board extends Observable {
 	public void spawnPiece(Piece piece, Location location) {
 		this.maybeEvictPiece(location);
 		this.spaces.put(piece, location);
-
 		this.setChanged();
 	}
 
